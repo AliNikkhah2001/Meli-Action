@@ -182,20 +182,22 @@ jobs:
           git commit -m "⬇️ YouTube: ${{ steps.retrieve.outputs.filename }} [skip ci]" || echo "Nothing to commit"
           git push
 
-      - name: 📤 Upload to GitHub Releases
+           - name: 📤 Upload to GitHub Releases
         if: github.event.inputs.upload_method == 'release (GitHub Releases)'
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ inputs.release_tag || format('yt-{0}', github.run_number) }}
           name: ${{ format('YouTube - {0}', steps.retrieve.outputs.filename) }}
           body: |
-            **📽️ دانلود از یوتیوب**
+            **📽️ YouTube Download**
 
-            **عنوان:** ${{ steps.retrieve.outputs.title }}
-            **لینک ویدیو:** ${{ github.event.inputs.video_url }}
-            **کیفیت:** ${{ github.event.inputs.desired_quality }}
-            **فرمت:** ${{ github.event.inputs.output_format }}
-            **تاریخ دانلود:** ${{ steps.get_date.outputs.date }}
+            **Title:** ${{ steps.retrieve.outputs.title }}
+
+            **Original Link:** ${{ github.event.inputs.video_url }}
+
+            **Quality:** ${{ github.event.inputs.desired_quality }}
+            **Format:** ${{ github.event.inputs.output_format }}
+            **Downloaded on:** ${{ steps.get_date.outputs.date }}
 
             ---
             Powered by Meli-Action ⚡
